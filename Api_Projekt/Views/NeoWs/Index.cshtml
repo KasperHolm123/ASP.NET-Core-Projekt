@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Near Earth Objects";
+}
+
+<br />
+<div class="container row p-0 m-0">
+    <div class="col-6">
+        <h2 class="text-info">Asteroids</h2>
+    </div>
+    <div class="col-3 offset-3">
+        <a asp-action="ApiView" asp-controller="NeoWs" class="btn btn-info form-control text-white">
+            Add Asteroid
+        </a>
+    </div>
+    <div class="col-12 border p-3">
+        <table id="DT_load" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Hazardous</th>
+                    <th>Close Approach Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/NeoWs.js"></script>
+}
