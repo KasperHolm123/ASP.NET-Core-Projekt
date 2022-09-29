@@ -53,9 +53,9 @@ namespace Api_Projekt.Controllers
             {
                 var apiLink = $"https://api.nasa.gov/neo/rest/v1/feed?start_date={START_DATE}&end_date={END_DATE}&api_key={API_KEY}";
                 var json = await client.GetAsync(apiLink);
-                var response = json.Content.ReadAsStringAsync().Result as string;
+                var response = json.Content.ReadAsStringAsync().Result;
 
-                return Json(new { data = response});
+                return Json(new { data = response });
             }
         }
     }
