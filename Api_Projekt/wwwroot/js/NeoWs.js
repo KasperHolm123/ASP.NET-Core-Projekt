@@ -47,7 +47,7 @@ function getNasaAsteroids() {
         "ajax": {
             "url": "/neows/getall",
             "type": "GET",
-            "datatype": "json"
+            "datatype": "json",
         },
         "columns": [
             { "data": "name", "width": "20%" },

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Web;
 
 namespace Api_Projekt.Controllers
 {
@@ -36,7 +37,7 @@ namespace Api_Projekt.Controllers
 
         public async Task<IActionResult> GetAll()
         {
-            return Json(new { data = await _db.Asteroids.ToListAsync() });
+            return Json(new { data = _db.Asteroids.ToListAsync() });
         }
 
         /// <summary>
@@ -52,8 +53,8 @@ namespace Api_Projekt.Controllers
             using (var client = new HttpClient())
             {
                 var apiLink = $"https://api.nasa.gov/neo/rest/v1/feed?start_date={START_DATE}&end_date={END_DATE}&api_key={API_KEY}";
-                var json = await client.GetAsync(apiLink);
-                var response = json.Content.ReadAsStringAsync().Result;
+                var response = await client.GetAsync(apiLink);
+                var responseToString = response.Content.ReadAsStringAsync();
 
                 return Json(new { data = response });
             }
