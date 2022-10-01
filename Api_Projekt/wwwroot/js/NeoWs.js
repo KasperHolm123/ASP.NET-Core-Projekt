@@ -45,14 +45,14 @@ function getLocalAsteroids() {
 function getNasaAsteroids() {
     dataTable = $('#DT_load').DataTable({
         "ajax": {
-            "url": "/neows/getall",
+            "url": "/neows/nasagetall",
             "type": "GET",
             "datatype": "json",
         },
         "columns": [
-            { "data": "name", "width": "20%" },
-            { "data": "hazardous", "width": "20%" },
-            { "data": "close approach date", "width": "20%" },
+            { "result": "near_earth_objects.2015-09-08.0.name", "width": "20%" },
+            { "result": "near_earth_objects.2015-09-08.0.is_potentially_hazardous_asteroid", "width": "20%" },
+            { "result": "near_earth_objects.2015-09-08.0.close_approach_data.0.close_approach_date", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {
