@@ -57,7 +57,9 @@ namespace Api_Projekt.Controllers
                 var responseToString = response.Content.ReadAsStringAsync().Result;
                 var json_object = JsonConvert.DeserializeObject<Root>(responseToString);
 
-                return Json(new { data = json_object });
+                // JS needs the retrieved json to be wrapped in an array [] for some reason..
+                object[] wrappedJson = new object[] { json_object };
+                return Json(new { data = wrappedJson });
             }
         }
     }
