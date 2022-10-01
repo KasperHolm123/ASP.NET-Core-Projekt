@@ -50,9 +50,9 @@ function getNasaAsteroids() {
             "datatype": "json",
         },
         "columns": [
-            { "result": "near_earth_objects.2015-09-08.0.name", "width": "20%" },
-            { "result": "near_earth_objects.2015-09-08.0.is_potentially_hazardous_asteroid", "width": "20%" },
-            { "result": "near_earth_objects.2015-09-08.0.close_approach_data.0.close_approach_date", "width": "20%" },
+            { "data": "near_earth_objects._20150908.0.name", "width": "20%" },
+            { "data": "near_earth_objects._20150908.0.is_potentially_hazardous_asteroid", "width": "20%" },
+            { "data": "near_earth_objects._20150908.0.close_approach_data.0.close_approach_date", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {

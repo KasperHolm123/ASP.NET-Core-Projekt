@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Text.Json;
 using System.Web;
 
 namespace Api_Projekt.Controllers
@@ -44,7 +45,6 @@ namespace Api_Projekt.Controllers
         /// Makes a call to the Nasa NeoWs API
         /// </summary>
         /// <returns>JSON with all Neo's within the specified time frame.</returns>
-        [Produces("application/json")]
         public async Task<IActionResult> NasaGetAll() //string START_DATE, string END_DATE, string API_KEY
         {
             var START_DATE = "2015-09-07";
@@ -54,11 +54,121 @@ namespace Api_Projekt.Controllers
             {
                 var apiLink = $"https://api.nasa.gov/neo/rest/v1/feed?start_date={START_DATE}&end_date={END_DATE}&api_key={API_KEY}";
                 var response = await client.GetAsync(apiLink);
-                var responseToString = response.Content.ReadAsStringAsync();
-                var json_object = Ok(responseToString);
+                var responseToString = response.Content.ReadAsStringAsync().Result;
+                var json_object = JsonConvert.DeserializeObject<Root>(responseToString);
 
-                return json_object;
+                return Json(new { data = json_object });
             }
         }
     }
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+    public class noget
+    {
+        public Links links { get; set; }
+    public string id { get; set; }
+    public string neo_reference_id { get; set; }
+    public string name { get; set; }
+    public string nasa_jpl_url { get; set; }
+    public double absolute_magnitude_h { get; set; }
+    public EstimatedDiameter estimated_diameter { get; set; }
+    public bool is_potentially_hazardous_asteroid { get; set; }
+    public List<CloseApproachDatum> close_approach_data { get; set; }
+    public bool is_sentry_object { get; set; }
+    }
+
+    public class noget1
+    {
+        public Links links { get; set; }
+        public string id { get; set; }
+        public string neo_reference_id { get; set; }
+        public string name { get; set; }
+        public string nasa_jpl_url { get; set; }
+        public double absolute_magnitude_h { get; set; }
+        public EstimatedDiameter estimated_diameter { get; set; }
+        public bool is_potentially_hazardous_asteroid { get; set; }
+        public List<CloseApproachDatum> close_approach_data { get; set; }
+        public bool is_sentry_object { get; set; }
+    }
+
+    public class CloseApproachDatum
+    {
+        public string close_approach_date { get; set; }
+        public string close_approach_date_full { get; set; }
+        public object epoch_date_close_approach { get; set; }
+        public RelativeVelocity relative_velocity { get; set; }
+        public MissDistance miss_distance { get; set; }
+        public string orbiting_body { get; set; }
+    }
+
+    public class EstimatedDiameter
+    {
+        public Kilometers kilometers { get; set; }
+        public Meters meters { get; set; }
+        public Miles miles { get; set; }
+        public Feet feet { get; set; }
+    }
+
+    public class Feet
+    {
+        public double estimated_diameter_min { get; set; }
+        public double estimated_diameter_max { get; set; }
+    }
+
+    public class Kilometers
+    {
+        public double estimated_diameter_min { get; set; }
+        public double estimated_diameter_max { get; set; }
+    }
+
+    public class Links
+    {
+        public string next { get; set; }
+        public string previous { get; set; }
+        public string self { get; set; }
+    }
+
+    public class Meters
+    {
+        public double estimated_diameter_min { get; set; }
+        public double estimated_diameter_max { get; set; }
+    }
+
+    public class Miles
+    {
+        public double estimated_diameter_min { get; set; }
+        public double estimated_diameter_max { get; set; }
+    }
+
+    public class MissDistance
+    {
+        public string astronomical { get; set; }
+        public string lunar { get; set; }
+        public string kilometers { get; set; }
+        public string miles { get; set; }
+    }
+
+    public class NearEarthObjects
+    {
+        [JsonProperty("2015-09-08")]
+        public List<noget1> _20150908 { get; set; }
+
+        [JsonProperty("2015-09-07")]
+        public List<noget> _20150907 { get; set; }
+    }
+
+    public class RelativeVelocity
+    {
+        public string kilometers_per_second { get; set; }
+        public string kilometers_per_hour { get; set; }
+        public string miles_per_hour { get; set; }
+    }
+
+    public class Root
+    {
+        public Links links { get; set; }
+        public int element_count { get; set; }
+        public NearEarthObjects near_earth_objects { get; set; }
+    }
+
+
 }
