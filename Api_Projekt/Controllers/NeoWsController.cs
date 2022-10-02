@@ -23,17 +23,27 @@ namespace Api_Projekt.Controllers
             return View();
         }
 
-        public IActionResult ApiView(string? startDate, string? endDate)
+        public IActionResult ApiView()
         {
-            //if (ModelState.IsValid)
-            //{
-            //    _ = Asteroid.ID == 0 ? _db.Asteroids.Add(Asteroid) : _db.Asteroids.Update(Asteroid);
-            //    _db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
-
-            //return View(Asteroid);
             return View();
+        }
+
+        public IActionResult Upsert()
+        {
+            return View(new Asteroid());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(Asteroid model)
+        {
+            if (ModelState.IsValid)
+            {
+                _ = model.ID == 0 ? _db.Asteroids.Add(model) : _db.Asteroids.Update(model);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(Asteroid);
         }
 
         public async Task<IActionResult> GetAll()

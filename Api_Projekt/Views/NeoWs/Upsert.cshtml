@@ -1,0 +1,56 @@
+﻿@model Api_Projekt.Models.Asteroid
+
+@{
+    ViewData["Title"] = "Upsert";
+}
+
+<br />
+<h2 class="text-info">@(Model.ID != 0 ? "Edit" : "Create") Book)</h2>
+<br />
+
+<div class="border-container" stylle="padding:30px;">
+    <form method="post">
+        @if (Model.ID != 0)
+        {
+            <input type="hidden" asp-for="ID"/>
+        }
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Name"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="IsPotentiallyHazardousAsteroid">Hazardous</label>
+            </div>
+            <div class="col-6">
+                <input asp-for="IsPotentiallyHazardousAsteroid" class="form-control" />
+                <span asp-validation-for="IsPotentiallyHazardousAsteroid" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="CloseApproachDate">Close Approach Date</label>
+            </div>
+            <div class="col-6">
+                <input asp-for="CloseApproachDate" class="form-control" />
+                <span asp-validation-for="CloseApproachDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3 offset-3">
+                <button type="submit" class="btn btn-primary form-control">
+                    @(Model.ID != 0 ? "Update" : "Create")
+                </button>
+            </div>
+            <div class="col-3">
+                <a asp-action="ApiView" class="btn btn-success form-control">Back To List</a>
+            </div>
+        </div>
+    </form>
+</div>

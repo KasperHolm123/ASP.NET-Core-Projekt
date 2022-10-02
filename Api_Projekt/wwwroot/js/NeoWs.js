@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-    getNasaData()
     if (document.title == "Near Earth Objects") {
         getLocalAsteroids();
     }
@@ -45,15 +44,29 @@ function getLocalAsteroids() {
 
 function getNasaAsteroids() {
     dataTable = $('#DT_load').DataTable({
-        "ajax": {
-            "url": "/neows/nasagetall",
-            "type": "GET",
-            "datatype": "json",
-        },
+        "data": [
+            {
+                "id": 1,
+                "name": "Tiger Nixon",
+                "position": "System Architect",
+                "salary": "$3,120",
+                "start_date": "2011/04/25",
+                "office": "Edinburgh",
+                "extn": 5421
+            },
+            {
+                "id": 2,
+                "name": "Garrett Winters",
+                "position": "Director",
+                "salary": "5300",
+                "start_date": "2011/07/25",
+                "office": "Edinburgh",
+                "extn": "8422"
+            }],
         "columns": [
-            { "data": "near_earth_objects._1.0.name", "width": "20%" },
-            { "data": "near_earth_objects._1.0.is_potentially_hazardous_asteroid", "width": "20%" },
-            { "data": "near_earth_objects._1.0.close_approach_data.0.close_approach_date", "width": "20%" },
+            { "data": "name", "width": "20%" },
+            { "data": "position", "width": "20%" },
+            { "data": "start_date", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {
@@ -76,9 +89,15 @@ function getNasaData () {
     fetch('https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-8&api_key=gNuLkRkZgZS1zdx0AQr8CUVvqQxfXWTTCSVTeDXx')
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+            var asteroids = [];
             for (var key in data['near_earth_objects']) {
-                console.log(data['near_earth_objects'][key])
+                for (var i = 0; i < data['near_earth_objects'][key].length; i++) {
+                    asteroids.push(data['near_earth_objects'][key][i])
+                }
             }
+            var jsonData = {};
+            jsonData.data = asteroids;
+            console.log(JSON.stringify(jsonData, undefined, 4));
+            return JSON.stringify(jsonData);
         });
 }
