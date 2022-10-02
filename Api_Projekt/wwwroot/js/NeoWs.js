@@ -3,9 +3,39 @@
         getLocalAsteroids();
     }
     else if (document.title == "Nasa Response") {
-        getNasaAsteroids();
+        //getNasaAsteroids();
+        loadTable(getNasaData(), document.querySelector("table"));
     }
 });
+
+async function loadTable(url, table) {
+    const tableHead = table.querySelector("thead");
+    const tableBody = table.querySelector("tbody");
+    const { headers, rows } = await url;
+    console.log(headers);
+    console.log(rows);
+
+    tableHead.innerHTML = "<tr></tr>";
+    tableBody.innerHTML = "";
+
+    for (const headerText of headers) {
+        const headerElement = document.createElement("th");
+
+        headerElement.textContent = headerText;
+        tableHead.querySelector("tr").appendChild(headerElement);
+    }
+
+    for (const row of rows) {
+        console.log(row["name"]);
+        //const rowElement = document.createElement("tr");
+
+        //cellElement = row["name"];
+        //rowElement.appendChild(cellElement);
+    }
+
+    tableBody.appendChild(rowElement);
+}
+
 
 var dataTable;
 function getLocalAsteroids() {
@@ -42,17 +72,17 @@ function getLocalAsteroids() {
     });
 }
 
-function getNasaAsteroids() {
+async function getNasaAsteroids() {
     dataTable = $('#DT_load').DataTable({
         "ajax": {
-            "url": "neows/nasagetall",
-            "type": "POST",
+            "url": await getNasaData(),
+            "type": "GET",
             "datatype": "json"
         },
         "columns": [
             { "data": "name", "width": "20%" },
-            { "data": "position", "width": "20%" },
-            { "data": "start_date", "width": "20%" },
+            { "data": "is_potentially_hazardous_asteroid", "width": "20%" },
+            { "data": "close_approach_data.0.close_approach_date", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {
@@ -71,8 +101,8 @@ function getNasaAsteroids() {
     });
 }
 
-function getNasaData () {
-    fetch('https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-8&api_key=gNuLkRkZgZS1zdx0AQr8CUVvqQxfXWTTCSVTeDXx')
+async function getNasaData () {
+    let data = await fetch('https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-8&api_key=gNuLkRkZgZS1zdx0AQr8CUVvqQxfXWTTCSVTeDXx')
         .then((response) => response.json())
         .then((data) => {
             var asteroids = [];
@@ -81,9 +111,11 @@ function getNasaData () {
                     asteroids.push(data['near_earth_objects'][key][i])
                 }
             }
-            var jsonData = {};
-            jsonData.data = asteroids;
-            console.log(JSON.stringify(jsonData, undefined, 4));
-            return JSON.stringify(jsonData);
+            var jsonData = new Object();
+            jsonData.headers = ["Name", "Hazardous", "Close Approach Date"];
+            jsonData.rows = asteroids;
+            //console.log(jsonData);
+            return jsonData;
         });
+    return data;
 }
