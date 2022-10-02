@@ -152,10 +152,10 @@ namespace Api_Projekt.Controllers
     public class NearEarthObjects
     {
         [JsonProperty("2015-09-08")]
-        public List<noget1> _20150908 { get; set; }
+        public List<noget1> _0 { get; set; }
 
         [JsonProperty("2015-09-07")]
-        public List<noget> _20150907 { get; set; }
+        public List<noget> _1 { get; set; }
     }
 
     public class RelativeVelocity

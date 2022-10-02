@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    getNasaData()
     if (document.title == "Near Earth Objects") {
         getLocalAsteroids();
     }
@@ -50,9 +51,9 @@ function getNasaAsteroids() {
             "datatype": "json",
         },
         "columns": [
-            { "data": "near_earth_objects._20150908.0.name", "width": "20%" },
-            { "data": "near_earth_objects._20150908.0.is_potentially_hazardous_asteroid", "width": "20%" },
-            { "data": "near_earth_objects._20150908.0.close_approach_data.0.close_approach_date", "width": "20%" },
+            { "data": "near_earth_objects._1.0.name", "width": "20%" },
+            { "data": "near_earth_objects._1.0.is_potentially_hazardous_asteroid", "width": "20%" },
+            { "data": "near_earth_objects._1.0.close_approach_data.0.close_approach_date", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {
@@ -69,4 +70,15 @@ function getNasaAsteroids() {
         },
         "width": "100%"
     });
+}
+
+function getNasaData () {
+    fetch('https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-8&api_key=gNuLkRkZgZS1zdx0AQr8CUVvqQxfXWTTCSVTeDXx')
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            for (var key in data['near_earth_objects']) {
+                console.log(data['near_earth_objects'][key])
+            }
+        });
 }
