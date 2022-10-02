@@ -28,6 +28,18 @@ namespace Api_Projekt.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult ApiView(IFormCollection form)
+        {
+            //if (ModelState.IsValid)
+            //{
+            //    _ = model.ID == 0 ? _db.Asteroids.Add(model) : _db.Asteroids.Update(model);
+            //    _db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+            return View();
+        }
+
         public IActionResult Upsert()
         {
             return View(new Asteroid());
@@ -37,12 +49,14 @@ namespace Api_Projekt.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(Asteroid model)
         {
-            if (ModelState.IsValid)
-            {
-                _ = model.ID == 0 ? _db.Asteroids.Add(model) : _db.Asteroids.Update(model);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            string name = model.Name;
+            Console.WriteLine(name);
+            //if (ModelState.IsValid)
+            //{
+            //    _ = model.ID == 0 ? _db.Asteroids.Add(model) : _db.Asteroids.Update(model);
+            //    _db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
             return View(Asteroid);
         }
 

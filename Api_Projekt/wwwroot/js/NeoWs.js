@@ -44,25 +44,11 @@ function getLocalAsteroids() {
 
 function getNasaAsteroids() {
     dataTable = $('#DT_load').DataTable({
-        "data": [
-            {
-                "id": 1,
-                "name": "Tiger Nixon",
-                "position": "System Architect",
-                "salary": "$3,120",
-                "start_date": "2011/04/25",
-                "office": "Edinburgh",
-                "extn": 5421
-            },
-            {
-                "id": 2,
-                "name": "Garrett Winters",
-                "position": "Director",
-                "salary": "5300",
-                "start_date": "2011/07/25",
-                "office": "Edinburgh",
-                "extn": "8422"
-            }],
+        "ajax": {
+            "url": "neows/nasagetall",
+            "type": "POST",
+            "datatype": "json"
+        },
         "columns": [
             { "data": "name", "width": "20%" },
             { "data": "position", "width": "20%" },
@@ -71,7 +57,7 @@ function getNasaAsteroids() {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                        <a href="/NeoWs/Upsert?id=${data}" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
+                        <a href="/NeoWs/ApiView" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
                             Add
                         </a>
                         </div>`;
