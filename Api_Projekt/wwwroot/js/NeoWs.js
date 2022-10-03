@@ -4,37 +4,8 @@
     }
     else if (document.title == "Nasa Response") {
         getNasaAsteroids();
-        //loadTable(getNasaData(), document.querySelector("table"));
     }
 });
-
-async function loadTable(url, table) {
-    const tableHead = table.querySelector("thead");
-    const tableBody = table.querySelector("tbody");
-    const { headers, rows } = await url;
-
-    tableHead.innerHTML = "<tr></tr>";
-    tableBody.innerHTML = "";
-
-    for (const headerText of headers) {
-        const headerElement = document.createElement("th");
-
-        headerElement.textContent = headerText;
-        tableHead.querySelector("tr").appendChild(headerElement);
-    }
-
-    for (const row of rows) {
-        const rowElement = document.createElement("tr");
-        const cellElement = document.createElement("p");
-
-
-        cellElement.textContent = row["name"];
-        rowElement.appendChild(cellElement);
-
-        tableBody.appendChild(rowElement);
-    }
-}
-
 
 var dataTable;
 function getLocalAsteroids() {
@@ -72,36 +43,13 @@ function getLocalAsteroids() {
 }
 
 async function getNasaAsteroids() {
+    var apiData = await getNasaData();
     dataTable = $('#DT_load').DataTable({
-        "data": [
-            {
-                "id": 1,
-                "name": "Tiger Nixon",
-                "position": "System Architect",
-                "salary": "$3,120",
-                "start_date": "2011/04/25",
-                "office": "Edinburgh",
-                "extn": 5421
-            },
-            {
-                "id": 2,
-                "name": "Garrett Winters",
-                "position": "Director",
-                "salary": "5300",
-                "start_date": "2011/07/25",
-                "office": "Edinburgh",
-                "extn": "8422"
-            },
-        ],
-        //"ajax": {
-        //    "url": await getNasaData(),
-        //    "type": "GET",
-        //    "datatype": "json"
-        //},
+        "data": apiData['rows'],
         "columns": [
             { "data": "name", "width": "20%" },
-            { "data": "position", "width": "20%" },
-            { "data": "start_date", "width": "20%" },
+            { "data": "is_potentially_hazardous_asteroid", "width": "20%" },
+            { "data": "close_approach_data.0.close_approach_date", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {
@@ -130,10 +78,8 @@ async function getNasaData () {
                     asteroids.push(data['near_earth_objects'][key][i])
                 }
             }
-            var jsonData = new Object();
-            jsonData.headers = ["Name", "Hazardous", "Close Approach Date"];
+            var jsonData = [];
             jsonData.rows = asteroids;
-            //console.log(jsonData);
             return jsonData;
         });
     return data;
