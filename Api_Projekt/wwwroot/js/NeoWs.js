@@ -12,8 +12,6 @@ async function loadTable(url, table) {
     const tableHead = table.querySelector("thead");
     const tableBody = table.querySelector("tbody");
     const { headers, rows } = await url;
-    console.log(headers);
-    console.log(rows);
 
     tableHead.innerHTML = "<tr></tr>";
     tableBody.innerHTML = "";
@@ -26,14 +24,15 @@ async function loadTable(url, table) {
     }
 
     for (const row of rows) {
-        console.log(row["name"]);
-        //const rowElement = document.createElement("tr");
+        const rowElement = document.createElement("tr");
+        const cellElement = document.createElement("p");
 
-        //cellElement = row["name"];
-        //rowElement.appendChild(cellElement);
+
+        cellElement.textContent = row["name"];
+        rowElement.appendChild(cellElement);
+
+        tableBody.appendChild(rowElement);
     }
-
-    tableBody.appendChild(rowElement);
 }
 
 
