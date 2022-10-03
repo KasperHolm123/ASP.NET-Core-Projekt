@@ -75,13 +75,13 @@ namespace Api_Projekt.Controllers
         {
             var START_DATE = "2015-09-07";
             var END_DATE = "2015-09-08";
-            var API_KEY = "DEMO_KEY";
+            var API_KEY = "gNuLkRkZgZS1zdx0AQr8CUVvqQxfXWTTCSVTeDXx";
             using (var client = new HttpClient())
             {
                 var apiLink = $"https://api.nasa.gov/neo/rest/v1/feed?start_date={START_DATE}&end_date={END_DATE}&api_key={API_KEY}";
                 var response = await client.GetAsync(apiLink);
                 var responseToString = response.Content.ReadAsStringAsync().Result;
-                var json_object = JsonConvert.DeserializeObject<dynamic>(responseToString);
+                var json_object = JsonConvert.DeserializeObject<Root>(responseToString);
 
                 // JS needs the retrieved json to be wrapped in an array [] for some reason..
                 object[] wrappedJson = new object[] { json_object };
