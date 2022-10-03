@@ -3,8 +3,8 @@
         getLocalAsteroids();
     }
     else if (document.title == "Nasa Response") {
-        //getNasaAsteroids();
-        loadTable(getNasaData(), document.querySelector("table"));
+        getNasaAsteroids();
+        //loadTable(getNasaData(), document.querySelector("table"));
     }
 });
 
@@ -73,20 +73,40 @@ function getLocalAsteroids() {
 
 async function getNasaAsteroids() {
     dataTable = $('#DT_load').DataTable({
-        "ajax": {
-            "url": await getNasaData(),
-            "type": "GET",
-            "datatype": "json"
-        },
+        "data": [
+            {
+                "id": 1,
+                "name": "Tiger Nixon",
+                "position": "System Architect",
+                "salary": "$3,120",
+                "start_date": "2011/04/25",
+                "office": "Edinburgh",
+                "extn": 5421
+            },
+            {
+                "id": 2,
+                "name": "Garrett Winters",
+                "position": "Director",
+                "salary": "5300",
+                "start_date": "2011/07/25",
+                "office": "Edinburgh",
+                "extn": "8422"
+            },
+        ],
+        //"ajax": {
+        //    "url": await getNasaData(),
+        //    "type": "GET",
+        //    "datatype": "json"
+        //},
         "columns": [
             { "data": "name", "width": "20%" },
-            { "data": "is_potentially_hazardous_asteroid", "width": "20%" },
-            { "data": "close_approach_data.0.close_approach_date", "width": "20%" },
+            { "data": "position", "width": "20%" },
+            { "data": "start_date", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                        <a href="/NeoWs/ApiView" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
+                        <a href="/NeoWs/ApiView?id=${data}" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
                             Add
                         </a>
                         </div>`;
