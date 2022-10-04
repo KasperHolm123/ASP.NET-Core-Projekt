@@ -25,14 +25,12 @@ namespace Api_Projekt.Controllers
 
         public IActionResult ApiView()
         {
-            Console.WriteLine("get");
             return View();
         }
 
         [HttpPost]
         public IActionResult ApiView(int? id)
         {
-            Console.WriteLine("post");
             //if (ModelState.IsValid)
             //{
             //    _ = model.ID == 0 ? _db.Asteroids.Add(model) : _db.Asteroids.Update(model);

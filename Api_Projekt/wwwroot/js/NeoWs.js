@@ -4,8 +4,46 @@
     }
     else if (document.title == "Nasa Response") {
         getNasaAsteroids();
+
+        $('#DT_load').on('click', 'tbody td.dt-control', function () {
+            var tr = $(this).closest('tr');
+            var row = dataTable.row(tr);
+            console.log(row.data());
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+            } else {
+                // Open this row
+                row.child(formatChild(row.data())).show();
+            }
+        })
     }
 });
+
+function formatChild(d) {
+    // `d` is the original data object for the row
+    return (
+        '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+        '<tr>' +
+        '<td>ID:</td>' +
+        '<td>' +
+        d.id +
+        '</td>' +
+        '</tr>' +
+        '<tr>' +
+        '<td>Diameter (kilometers):</td>' +
+        '<td>' +
+        d.estimated_diameter['kilometers']['estimated_diameter_max'] +
+        '</td>' +
+        '</tr>' +
+        '<tr>' +
+        '<td>Extra info:</td>' +
+        '<td>And any further details here (images etc)...</td>' +
+        '</tr>' +
+        '</table>'
+    );
+}
 
 var dataTable;
 function getLocalAsteroids() {
@@ -43,10 +81,18 @@ function getLocalAsteroids() {
 }
 
 async function getNasaAsteroids() {
-    var apiData = await getNasaData();
+    var apiData = await callNeoApi();
     dataTable = $('#DT_load').DataTable({
-        "data": apiData['rows'],
+        data: apiData['rows'],
+        rowid: "id",
+        statesave: true,
         "columns": [
+            {
+                className: 'dt-control',
+                orderable: false,
+                data: null,
+                defaultContent: '',
+            },
             { "data": "name", "width": "20%" },
             { "data": "is_potentially_hazardous_asteroid", "width": "20%" },
             { "data": "close_approach_data.0.close_approach_date", "width": "20%" },
@@ -68,7 +114,7 @@ async function getNasaAsteroids() {
     });
 }
 
-async function getNasaData () {
+async function callNeoApi () {
     let data = await fetch('https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-8&api_key=gNuLkRkZgZS1zdx0AQr8CUVvqQxfXWTTCSVTeDXx')
         .then((response) => response.json())
         .then((data) => {

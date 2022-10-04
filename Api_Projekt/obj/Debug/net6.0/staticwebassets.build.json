@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "IkhKc9uaXlHMQdMx6TnnSEodwVe100OTaunuv6vy528=",
+  "Hash": "yaBTw+XH6fTJagEqUYjaMLvR0m8Rbxk2ISbqbIeYqLU=",
   "Source": "Api_Projekt",
   "BasePath": "_content/Api_Projekt",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\studie_filer\\Programmering\\3. Semester\\PrgTek32\\ASP.NET Core Projekt\\Api_Projekt\\Api_Projekt\\wwwroot\\js\\jadatatables.js",
+      "SourceId": "Api_Projekt",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\studie_filer\\Programmering\\3. Semester\\PrgTek32\\ASP.NET Core Projekt\\Api_Projekt\\Api_Projekt\\wwwroot\\",
+      "BasePath": "_content/Api_Projekt",
+      "RelativePath": "js/jadatatables.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\jadatatables.js"
     },
     {
       "Identity": "C:\\studie_filer\\Programmering\\3. Semester\\PrgTek32\\ASP.NET Core Projekt\\Api_Projekt\\Api_Projekt\\wwwroot\\js\\NeoWs.js",
